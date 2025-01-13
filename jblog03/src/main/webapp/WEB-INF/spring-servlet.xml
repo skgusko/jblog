@@ -14,6 +14,14 @@
 	
 	<mvc:default-servlet-handler />
 	
+	<!-- Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="jblog.security.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/views/" />

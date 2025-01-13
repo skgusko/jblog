@@ -12,16 +12,13 @@
 </head>
 <body>
 	<div class="center-content">
-		<h1 class="logo">JBlog</h1>
-		<ul class="menu">
-			<li><a href="">로그인</a></li>
-			<li><a href="">회원가입</a></li>
-			<li><a href="">로그아웃</a></li>
-			<li><a href="">내블로그</a></li>
-		</ul>
-		<form class="login-form">
-      		<label>아이디</label> <input type="text" name="id">
-      		<label>패스워드</label> <input type="text" name="password">
+		<c:import url="/WEB-INF/views/includes/header.jsp" />
+		<form class="login-form" action="${pageContext.request.contextPath}/user/auth" method="post">
+      		<label>아이디</label> <input type="text" name="id" value="${id }">
+      		<label>패스워드</label> <input type="text" name="password" value="">
+      		<c:if test="${result == 'fail' }">
+      			<p>로그인이 실패했습니다.</p>
+      		</c:if>
       		<input type="submit" value="로그인">
 		</form>
 	</div>

@@ -5,7 +5,18 @@
 	version="5.0">
 	<display-name>jblog03</display-name>
 
-	<!-- Dispatcher Servlet --> <!-- Controller 생성만 함  -->
+	<!-- Context Parameter -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	
+	<!-- ContextLoad Listener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- Dispatcher Servlet -->
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

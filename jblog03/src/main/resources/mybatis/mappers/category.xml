@@ -9,5 +9,23 @@
 		values(null, '미분류', null, #{blogId})
 		]]>
 	</insert>
+	
+	<select id="findAllById" parameterType="string" resultType="categoryvo">
+		<![CDATA[
+		select id, name, description, blog_id as blogId
+		  from category
+		 where blog_id=#{id} 
+		]]>
+	</select>
+	
+	<select id="findLatestCategoryId" parameterType="string" resultType="long">
+		<![CDATA[
+		select id
+		  from category	
+		 where blog_id=#{id} 
+	  order by id desc
+	     limit 1;
+		]]>
+	</select>
 
 </mapper>

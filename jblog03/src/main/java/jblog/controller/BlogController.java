@@ -1,5 +1,6 @@
 package jblog.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import jblog.service.CategoryService;
 import jblog.service.FileUploadService;
 import jblog.service.PostService;
 import jblog.vo.BlogVo;
+import jblog.vo.CategoryVo;
 import jblog.vo.PostVo;
 
 @Controller
@@ -121,9 +123,23 @@ public class BlogController {
 	}
 	
 	@GetMapping("/admin/category")
-	public String adminCategory(@PathVariable("id") String id) {
-		
+	public String adminCategory(@PathVariable("id") String id, Model model) {
+		model.addAttribute("categoryVo", categoryService.getTotal(id));
 		
 		return "blog/admin-category";
+	}
+	
+	@PostMapping("/admin/category/add")
+	public String adminCategory(@PathVariable("id") String id,
+								@RequestParam("name") String name,
+								@RequestParam("desc") String description) {
+		CategoryVo vo = new CategoryVo();
+		vo.setBlogId(id);
+		vo.setName(name);
+		vo.setDescription(description);
+		
+		categoryService.add(vo);
+		
+		return "redirect:/" + id + "/admin/category";
 	}
 }

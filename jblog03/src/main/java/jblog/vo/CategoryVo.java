@@ -5,7 +5,14 @@ public class CategoryVo {
 	private String name;
 	private String description;
 	private String blogId;
+	private Long count; //post 개수
 	
+	public Long getCount() {
+		return count;
+	}
+	public void setCount(Long count) {
+		this.count = count;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -33,7 +40,8 @@ public class CategoryVo {
 	
 	@Override
 	public String toString() {
-		return "CategoryVo [id=" + id + ", name=" + name + ", description=" + description + ", blogId=" + blogId + "]";
+		return "CategoryVo [id=" + id + ", name=" + name + ", description=" + description + ", blogId=" + blogId
+				+ ", count=" + count + "]";
 	}
 	
 }

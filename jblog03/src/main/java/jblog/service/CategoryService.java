@@ -21,4 +21,12 @@ public class CategoryService {
 	public Long findLatestCategoryId(String id) {
 		return categoryRepository.findLatestCategoryId(id);
 	}
+
+	public int add(CategoryVo vo) {
+		return categoryRepository.insert(vo);
+	}
+
+	public List<CategoryVo> getTotal(String id) {
+		return categoryRepository.getTotal(id);
+	}
 }

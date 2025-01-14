@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jblog.repository.BlogRepository;
 import jblog.repository.CategoryRepository;
 import jblog.repository.UserRepository;
+import jblog.vo.CategoryVo;
 import jblog.vo.UserVo;
 
 @Service
@@ -36,7 +37,10 @@ public class UserService {
 		}
 		
 		// 3. Default Category 등록 (Category)
-		count = categoryRepository.insertDefaultCategory(userVo.getId());
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setName("미분류");
+		categoryVo.setBlogId(userVo.getId());
+		count = categoryRepository.insert(categoryVo);
 	}
 
 	public UserVo getUser(String id, String password) {

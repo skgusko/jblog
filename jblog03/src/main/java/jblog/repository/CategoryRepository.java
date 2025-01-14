@@ -13,14 +13,17 @@ public class CategoryRepository {
 	public CategoryRepository(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-	public int insertDefaultCategory(String blogId) {
-		return sqlSession.insert("category.insertDefaultCategory", blogId);
+	public int insert(CategoryVo categoryVo) {
+		return sqlSession.insert("category.insert", categoryVo);
 	}
 	public List<CategoryVo> findAllById(String blogId) {
 		return sqlSession.selectList("category.findAllById", blogId);
 	}
 	public Long findLatestCategoryId(String id) {
 		return sqlSession.selectOne("category.findLatestCategoryId", id);
+	}
+	public List<CategoryVo> getTotal(String id) {
+		return sqlSession.selectList("category.getTotal", id);
 	}
 	
 }

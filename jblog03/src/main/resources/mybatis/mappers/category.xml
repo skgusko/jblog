@@ -2,12 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="category">
-	<insert id="insertDefaultCategory" parameterType="string">
-		<![CDATA[
-		insert
-		  into category 
-		values(null, '미분류', null, #{blogId})
-		]]>
+	<insert id="insert" parameterType="categoryvo">
+		<choose>
+			<when test="description == null or description == ''">
+				<![CDATA[
+				insert
+				  into category 
+				values(null, #{name}, null, #{blogId})
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+				insert
+				  into category 
+				values(null, #{name}, #{description}, #{blogId})
+				]]>
+			</otherwise>
+		</choose>
 	</insert>
 	
 	<select id="findAllById" parameterType="string" resultType="categoryvo">
@@ -15,7 +26,7 @@
 		select id, name, description, blog_id as blogId
 		  from category
 		 where blog_id=#{id} 
-	  order by id desc;
+	  order by id desc
 		]]>
 	</select>
 	
@@ -25,8 +36,18 @@
 		  from category	
 		 where blog_id=#{id} 
 	  order by id desc
-	     limit 1;
+	     limit 1
 		]]>
 	</select>
-
+	
+	<select id="getTotal" parameterType="string" resultType="categoryvo">
+		<![CDATA[
+		select a.id, name, count(*) as count, description
+		  from category a join post b
+		    on a.id = b.category_id
+		 where a.blog_id=#{id} 
+	  group by a.id
+	  order by a.id desc
+		]]>
+	</select>
 </mapper>

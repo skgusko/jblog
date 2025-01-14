@@ -10,19 +10,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import jblog.service.BlogService;
 import jblog.service.CategoryService;
+import jblog.service.FileUploadService;
 import jblog.service.PostService;
+import jblog.vo.BlogVo;
 import jblog.vo.PostVo;
 
 @Controller
 @RequestMapping("/{id:(?!assets).*}") //정규표현식 - assets가 아닌 애가 있거나 없거나
 public class BlogController {
+	private final BlogService blogService;
 	private final CategoryService categoryService;
 	private final PostService postService;
-	public BlogController(CategoryService categoryService, PostService postService) {
+	private final FileUploadService fileUploadService;
+	public BlogController(BlogService blogService, CategoryService categoryService, PostService postService, FileUploadService fileUploadService) {
+		this.blogService = blogService;
 		this.categoryService = categoryService;
 		this.postService = postService;
+		this.fileUploadService = fileUploadService;
 	}
 	
 	/**
@@ -69,6 +77,25 @@ public class BlogController {
 	public String adminDefault(@PathVariable("id") String id) {
 		
 		return "blog/admin-default";
+	}
+	
+	@PostMapping("/admin")
+	public String adminDefault(@PathVariable("id") String id,
+							   @RequestParam("logo-file") MultipartFile file,
+							   @RequestParam("title") String title,
+							   @RequestParam("profile") String profile) {
+		BlogVo blogVo = new BlogVo();
+		blogVo.setBlogId(id);
+		blogVo.setTitle(title);
+		blogVo.setProfile(profile);
+		
+		String newProfile = fileUploadService.restore(file);
+		if (newProfile != null) {
+			blogVo.setProfile(newProfile);
+		}
+		blogService.update(blogVo);
+		
+		return "redirect:/" + id;
 	}
 	
 	@GetMapping("/admin/write")

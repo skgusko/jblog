@@ -25,6 +25,9 @@ public class BlogRepository {
 	public BlogVo findById(String id) {
 		return sqlSession.selectOne("blog.findById", id);
 	}
+	public int update(BlogVo blogVo) {
+		return sqlSession.update("blog.update", blogVo);
+	}
 	
 	
 }

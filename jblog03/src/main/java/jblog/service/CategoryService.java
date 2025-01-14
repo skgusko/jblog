@@ -18,4 +18,7 @@ public class CategoryService {
 		return categoryRepository.findAllById(id);
 	}
 
+	public Long findLatestCategoryId(String id) {
+		return categoryRepository.findLatestCategoryId(id);
+	}
 }

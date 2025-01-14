@@ -19,10 +19,20 @@ public class PostRepository {
 		return sqlSession.selectOne("post.findLatesCategoryId", id);
 	}
 	
-	public List<PostVo> findTitlesByIdAndCategoryId(String id, Long categoryId) {
-		return sqlSession.selectList(
-					"post.findTitlesByIdAndCategoryId", 
-					Map.of("id", id, "categoryId", categoryId));
+	public List<PostVo> findTitlesByCategoryId(Long categoryId) {
+		return sqlSession.selectList("post.findTitlesByCategoryId", categoryId); 
+	}
+
+	public Long findLatestPostId(Long categoryId) {
+		return sqlSession.selectOne("post.findLatestPostId", categoryId);
+	}
+
+	public PostVo findByPostId(Long postId) {
+		return sqlSession.selectOne("post.findByPostId", postId);
+	}
+
+	public int insert(PostVo postVo) {
+		return sqlSession.insert("post.insert", postVo);
 	}
 
 

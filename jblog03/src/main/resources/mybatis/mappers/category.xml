@@ -26,7 +26,14 @@
 		select id, name, description, blog_id as blogId
 		  from category
 		 where blog_id=#{id} 
-	  order by id desc
+		]]>
+	</select>
+	
+	<select id="findById" parameterType="long" resultType="categoryvo">
+		<![CDATA[
+		select blog_id as blogId
+		  from category
+		 where id=#{id} 
 		]]>
 	</select>
 	
@@ -42,12 +49,18 @@
 	
 	<select id="getTotal" parameterType="string" resultType="categoryvo">
 		<![CDATA[
-		select a.id, name, count(*) as count, description
-		  from category a join post b
+		select a.id, name, count(b.id) as count, description
+		  from category a left join post b
 		    on a.id = b.category_id
 		 where a.blog_id=#{id} 
 	  group by a.id
-	  order by a.id desc
 		]]>
 	</select>
+	
+	<delete id="deleteById" parameterType="long">
+		<![CDATA[
+		delete from category
+		where id=#{id}
+		]]>
+	</delete>
 </mapper>

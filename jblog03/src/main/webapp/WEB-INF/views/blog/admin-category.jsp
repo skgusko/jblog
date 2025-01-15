@@ -27,13 +27,17 @@
 		      			<th>설명</th>
 		      			<th>삭제</th>      			
 		      		</tr>
-		      		<c:forEach var="categoryVo" items="${categoryVo }">
+		      		<c:forEach var="categoryVo" items="${categoryVo }" varStatus="status">
 			      		<tr>
-							<td>${categoryVo.id }</td>
+							<td>${status.index+1 }</td>
 							<td>${categoryVo.name }</td>
 							<td>${categoryVo.count }</td>
 							<td>${categoryVo.description }</td>
-							<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+							<td>
+								<a href="${pageContext.request.contextPath}/${authUser.id}/admin/category/delete/${categoryVo.id}">
+									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg" alt="삭제">
+								</a>
+							</td>
 						</tr>  
 		      		</c:forEach>
 				</table>

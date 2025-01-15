@@ -29,4 +29,11 @@ public class CategoryService {
 	public List<CategoryVo> getTotal(String id) {
 		return categoryRepository.getTotal(id);
 	}
+
+	public void deleteContents(String authUserId, Long categoryId) {
+		CategoryVo vo = categoryRepository.findById(categoryId); //카테고리의 id로 찾은 row의 blogId가 authUserId와 동일하면
+		if (authUserId.equals(vo.getBlogId())) {
+			categoryRepository.deleteById(categoryId);
+		}
+	}
 }

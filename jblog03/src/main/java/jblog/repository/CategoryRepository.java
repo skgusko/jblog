@@ -25,5 +25,10 @@ public class CategoryRepository {
 	public List<CategoryVo> getTotal(String id) {
 		return sqlSession.selectList("category.getTotal", id);
 	}
-	
+	public CategoryVo findById(Long categoryId) {
+		return sqlSession.selectOne("category.findById", categoryId);
+	}
+	public int deleteById(Long categoryId) {
+		return sqlSession.delete("category.deleteById", categoryId);
+	}
 }

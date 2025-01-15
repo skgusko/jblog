@@ -1,6 +1,5 @@
 package jblog.controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpSession;
 import jblog.service.BlogService;
 import jblog.service.CategoryService;
 import jblog.service.FileUploadService;
@@ -20,6 +20,7 @@ import jblog.service.PostService;
 import jblog.vo.BlogVo;
 import jblog.vo.CategoryVo;
 import jblog.vo.PostVo;
+import jblog.vo.UserVo;
 
 @Controller
 @RequestMapping("/{id:(?!assets).*}") //정규표현식 - assets가 아닌 애가 있거나 없거나
@@ -139,6 +140,21 @@ public class BlogController {
 		vo.setDescription(description);
 		
 		categoryService.add(vo);
+		
+		return "redirect:/" + id + "/admin/category";
+	}
+	
+	@GetMapping("/admin/category/delete/{categoryId}")
+	public String adminCategory(HttpSession session,
+								@PathVariable("id") String id, 
+								@PathVariable("categoryId") Long categoryId) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if (session == null || authUser == null ) {
+			return "user/login";
+		}
+		
+		categoryService.deleteContents(authUser.getId(), categoryId);
 		
 		return "redirect:/" + id + "/admin/category";
 	}

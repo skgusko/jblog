@@ -37,19 +37,12 @@ public class BlogController {
 		this.fileUploadService = fileUploadService;
 	}
 	
-	/**
-	 * /jblog/kickscar 
-	 * /jblog/kickscar/10 → 10번 category 안에 최근 글을 올려줌.
-	 * /jblog/kickscar/10/20
-	 */
 	@GetMapping({"", "/", "/{path1}", "/{path1}/{path2}"})
 	public String main(
 			@PathVariable("id") String id,
 			@PathVariable("path1") Optional<Long> path1, //null
 			@PathVariable("path2") Optional<Long> path2,
 						Model model) {
-		// 해당되는 id 없으면 main으로 돌리기 처리 
-		
 		
 		Long categoryId = 0L;
 		Long postId = 0L;
@@ -61,7 +54,6 @@ public class BlogController {
 			categoryId = path1.get();
 		}
 		
-		// default 값 세팅(없으면 최신값~)해서 서비스로 넘기고, 아래 작업은 서비스에서 해야 해!
 		// categoryId == 0L -> default categoryId 결정해서 서비스로 넘겨  
 		// postId == 0L -> default postId 결정해서 서비스로 넘겨 
 		if (categoryId == 0L) { //default categoryId
@@ -77,7 +69,6 @@ public class BlogController {
 		return "blog/main";
 	}
 	
-	// @Auth 추천. 그 유저만 들어올 수 있기에, AuthInterceptor에서 url의 userId 빼서(split) 세션에서 가져온 값과 비교해서 틀리면 main으로 돌리게.
 	@Auth
 	@GetMapping("/admin")
 	public String adminDefault(@PathVariable("id") String id) {

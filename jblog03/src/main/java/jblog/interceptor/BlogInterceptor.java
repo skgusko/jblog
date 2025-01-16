@@ -23,8 +23,6 @@ import jblog.vo.BlogVo;
 		@Override
 		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 				throws Exception {	
-			// http://localhost:8080/jblog03/dooly
-			System.out.println("====== BlogInterceptor");
 			String requestURI = request.getRequestURI();
 			String[] elements = requestURI.split("/");
 			
@@ -92,7 +90,6 @@ import jblog.vo.BlogVo;
 			}
 			
 			request.setAttribute("blogVo", blogVo);
-			System.out.println("====== BlogInterceptor");
 			return true;
 	}
 

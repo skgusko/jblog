@@ -13,7 +13,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("====== AuthInterceptor");
 		if (!(handler instanceof HandlerMethod)) { // DefaultServletRequestHandler 타입인 경우 
 			return true;
 		}
@@ -47,17 +46,12 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String requestURI = request.getRequestURI();
 		String[] elements = requestURI.split("/");
 		String blogId = elements[2];
-		// 없는 유저이면?
-		for (String element : elements) {
-			System.out.println(element);
-		}
 		
-		System.out.println("blogId.equals(authUser.getId()) : " + blogId.equals(authUser.getId()));
 		if ("admin".equals(elements[3]) && !blogId.equals(authUser.getId())) {
 			response.sendRedirect(request.getContextPath() + "/" + blogId);
 			return false;
 		}
-		System.out.println("====== AuthInterceptor");
+		
 		return true;
 	}
 

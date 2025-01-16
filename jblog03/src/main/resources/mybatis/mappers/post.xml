@@ -38,4 +38,13 @@
 		]]>
 	</insert>
 	
+	<select id="findByPostIdAndCategoryId" parameterType="map" resultType="int">
+		<![CDATA[
+		select count(*)
+  		  from post
+ 		 where id=#{postId}
+   		   and category_id=#{categoryId};
+		]]>
+	</select>
+	
 </mapper>

@@ -63,4 +63,13 @@
 		where id=#{id}
 		]]>
 	</delete>
+	
+	<select id="findByCategoryIdAndBlogId" parameterType="map" resultType="int">
+		<![CDATA[
+		select count(*)
+  		  from category
+ 		 where id=#{categoryId}
+   		   and blog_id=#{blogId};
+		]]>
+	</select>
 </mapper>

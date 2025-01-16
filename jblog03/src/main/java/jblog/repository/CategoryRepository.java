@@ -1,6 +1,7 @@
 package jblog.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -30,5 +31,9 @@ public class CategoryRepository {
 	}
 	public int deleteById(Long categoryId) {
 		return sqlSession.delete("category.deleteById", categoryId);
+	}
+	public int findByCategoryIdAndBlogId(Long categoryId, String blogId) {
+		return sqlSession.selectOne("category.findByCategoryIdAndBlogId",
+									Map.of("categoryId", categoryId, "blogId", blogId));
 	}
 }

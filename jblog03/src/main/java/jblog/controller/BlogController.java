@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
+import jblog.security.Auth;
 import jblog.service.BlogService;
 import jblog.service.CategoryService;
 import jblog.service.FileUploadService;
@@ -49,6 +50,7 @@ public class BlogController {
 						Model model) {
 		// 해당되는 id 없으면 main으로 돌리기 처리 
 		
+		
 		Long categoryId = 0L;
 		Long postId = 0L;
 		
@@ -76,12 +78,14 @@ public class BlogController {
 	}
 	
 	// @Auth 추천. 그 유저만 들어올 수 있기에, AuthInterceptor에서 url의 userId 빼서(split) 세션에서 가져온 값과 비교해서 틀리면 main으로 돌리게.
+	@Auth
 	@GetMapping("/admin")
 	public String adminDefault(@PathVariable("id") String id) {
 		
 		return "blog/admin-default";
 	}
 	
+	@Auth
 	@PostMapping("/admin")
 	public String adminDefault(@PathVariable("id") String id,
 							   @RequestParam("logo-file") MultipartFile file,
@@ -101,6 +105,7 @@ public class BlogController {
 		return "redirect:/" + id;
 	}
 	
+	@Auth
 	@GetMapping("/admin/write")
 	public String adminWrite(@PathVariable("id") String id, Model model) {
 		model.addAttribute("categoryVo", categoryService.getContents(id));
@@ -108,6 +113,7 @@ public class BlogController {
 		return "blog/admin-write";
 	}
 	
+	@Auth
 	@PostMapping("/admin/write")
 	public String adminWrite(@PathVariable("id") String id,
 							 @RequestParam("title") String title,
@@ -123,6 +129,7 @@ public class BlogController {
 		return "redirect:/" + id + "/" + postVo.getCategoryId();
 	}
 	
+	@Auth
 	@GetMapping("/admin/category")
 	public String adminCategory(@PathVariable("id") String id, Model model) {
 		model.addAttribute("categoryVo", categoryService.getTotal(id));
@@ -130,6 +137,7 @@ public class BlogController {
 		return "blog/admin-category";
 	}
 	
+	@Auth
 	@PostMapping("/admin/category/add")
 	public String adminCategory(@PathVariable("id") String id,
 								@RequestParam("name") String name,
@@ -144,6 +152,7 @@ public class BlogController {
 		return "redirect:/" + id + "/admin/category";
 	}
 	
+	@Auth
 	@GetMapping("/admin/category/delete/{categoryId}")
 	public String adminCategory(HttpSession session,
 								@PathVariable("id") String id, 

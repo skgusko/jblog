@@ -49,4 +49,8 @@ public class PostService {
 		return postRepository.insert(postVo);
 	}
 
+	public int findByPostIdAndCategoryId(Long postId, Long categoryId) {
+		return postRepository.findByPostIdAndCategoryId(postId, categoryId);
+	}
+
 }

@@ -35,5 +35,10 @@ public class PostRepository {
 		return sqlSession.insert("post.insert", postVo);
 	}
 
+	public int findByPostIdAndCategoryId(Long postId, Long categoryId) {
+		return sqlSession.selectOne("post.findByPostIdAndCategoryId",
+									Map.of("postId", postId, "categoryId", categoryId));
+	}
+
 
 }

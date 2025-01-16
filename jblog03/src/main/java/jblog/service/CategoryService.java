@@ -36,4 +36,10 @@ public class CategoryService {
 			categoryRepository.deleteById(categoryId);
 		}
 	}
+
+	public int findByCategoryIdAndBlogId(Long categoryId, String blogId) {
+		return categoryRepository.findByCategoryIdAndBlogId(categoryId, blogId);
+	}
+	
+	
 }

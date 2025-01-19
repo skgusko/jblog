@@ -12,13 +12,11 @@ import jblog.vo.PostVo;
 @Service
 public class PostService {
 	private final PostRepository postRepository;
-	private final BlogService blogService;
 	private final CategoryService categoryService;
 	
 	
-	public PostService(PostRepository postRepository, BlogService blogService, CategoryService categoryService) {
+	public PostService(PostRepository postRepository, CategoryService categoryService) {
 		this.postRepository = postRepository;
-		this.blogService = blogService;
 		this.categoryService = categoryService;
 	}
 
@@ -37,7 +35,6 @@ public class PostService {
 	public Map<String, Object> getBlogData(String blogId, Long categoryId, Long postId) {
 		Map<String, Object> result = new HashMap<>();
 		
-//		result.put("blogVo", blogService.getContents(blogId)); // title, profile
 		result.put("categoryVo", categoryService.getContents(blogId)); // category list
 		result.put("postVo", getContents(categoryId)); //카테고리의 게시글들
 		result.put("mainPostVo", getMainPost(postId)); //메인 게시글
